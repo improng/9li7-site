@@ -37,6 +37,8 @@ h1{font-size:36px;font-weight:700;margin-bottom:12px;letter-spacing:-.5px}
 .stat-card{background:var(--card);border-radius:16px;padding:24px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .stat-num{font-size:36px;font-weight:700;color:var(--blue)}.stat-label{font-size:13px;color:var(--t2);margin-top:4px}
 .stat-card.clickable{cursor:pointer;transition:transform .2s,box-shadow .2s}.stat-card.clickable:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.hero-c{display:flex;justify-content:center;gap:12px;margin-top:20px;flex-wrap:wrap}
+.chip{background:#fff;border:1px solid #e5e5ea;border-radius:20px;padding:8px 18px;font-size:14px;color:#1d1d1f}
 footer{text-align:center;padding:40px 20px;color:var(--t3);font-size:13px}
 footer a{color:var(--blue);text-decoration:none}
 @media(max-width:600px){h1{font-size:28px}.role-grid{grid-template-columns:repeat(3,1fr)}}
@@ -45,8 +47,9 @@ footer a{color:var(--blue);text-decoration:none}
 <body>
 
 <header>
-  <h1>🏛️ 九里七中央研究院</h1>
-  <p class="tagline">超级智能体生态 — <span id="heroRoles">10+</span> 位硅基员工自主运转<br>全链条自动化，我们造的不是工具，是同事。</p>
+  <h1 style="margin-bottom:20px">🏛️ 九里七中央研究院</h1>
+  <p class="tagline">超级智能体生态 — 硅基员工自主运转</p>
+  <div class="hero-c"><span class="chip">🤖 全链条自动化</span><span class="chip">💬 不是工具，是同事</span></div>
 </header>
 
 <div class="section">
