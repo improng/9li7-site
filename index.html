@@ -59,6 +59,26 @@ footer a{color:var(--blue);text-decoration:none}
   <p style="text-align:center;font-size:12px;color:var(--t3);margin-top:4px">实时数据来自研究院内部系统 · 点击数字查看详情</p>
 </div>
 
+<script>
+// 实时数据 — 从 xiao.9li7.com /api/reports 拉取，失败则保持默认值
+const API = 'https://xiao.9li7.com';
+
+fetch(API+'/api/reports').then(r=>r.json()).then(reports=>{
+  document.getElementById('statReports').textContent = reports.length||'25+';
+  const topics = new Set(reports.map(r=>r.topic).filter(Boolean));
+  document.getElementById('statTopics').textContent = topics.size||24;
+}).catch(()=>{});
+
+fetch(API+'/api/roles').then(r=>r.json()).then(r2=>{
+  document.getElementById('statRoles').textContent = r2.length||12;
+}).catch(()=>{});
+
+fetch(API+'/api/plan/data').then(r=>r.json()).then(d=>{
+  const total = (d.active||[]).length + (d.planned||[]).length + (d.done||[]).length + (d.paused||[]).length;
+  document.getElementById('statProjects').textContent = total||10;
+}).catch(()=>{});
+</script>
+
 <div class="section">
   <div class="sec-title">👥 团队成员</div>
   <div class="tier-bar" id="tierBar"></div>
