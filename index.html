@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>九里七研究院</title>
+<meta name="description" content="九里七研究院 — 超级智能体生态，12位硅基员工自主运转的数字员工研究院">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f5f5f7;--card:#fff;--text:#1d1d1f;--t2:#86868b;--t3:#aeaeb2;--blue:#0071e3;--green:#34c759;--orange:#ff9500;--red:#ff3b30;--purple:#af52de}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+header{text-align:center;padding:80px 20px 40px;max-width:700px;margin:0 auto}
+h1{font-size:36px;font-weight:700;margin-bottom:12px;letter-spacing:-.5px}
+.tagline{font-size:18px;color:var(--t2);line-height:1.7}
+.section{max-width:1000px;margin:0 auto;padding:40px 20px}
+.sec-title{font-size:24px;font-weight:700;margin-bottom:24px;text-align:center}
+.role-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.role-card{background:var(--card);border-radius:14px;padding:16px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.role-emoji{font-size:32px;margin-bottom:6px}
+.role-name{font-size:15px;font-weight:600}.role-title{font-size:12px;color:var(--t2);margin-top:2px}
+.tier-bar{display:flex;justify-content:center;gap:6px;margin-bottom:32px;flex-wrap:wrap}
+.tier-chip{padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid #e5e5ea;background:var(--card);color:var(--text)}
+.tier-chip.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.project-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.proj-card{background:var(--card);border-radius:16px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.04);border-left:3px solid var(--blue)}
+.proj-card.planned{border-left-color:var(--orange)}.proj-card.done{border-left-color:var(--green)}.proj-card.paused{border-left-color:var(--t3)}
+.proj-status{font-size:11px;font-weight:600;padding:2px 10px;border-radius:10px;display:inline-block;margin-bottom:8px}
+.proj-status.active{background:#e8f5e9;color:var(--green)}.proj-status.planned{background:#fff3e0;color:var(--orange)}.proj-status.done{background:#e3f2fd;color:var(--blue)}.proj-status.paused{background:#f0f0f5;color:var(--t2)}
+.proj-name{font-size:16px;font-weight:600;margin-bottom:4px}
+.proj-desc{font-size:13px;color:var(--t2)}
+.lab-banner{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-radius:20px;padding:40px;text-align:center;margin:40px 0}
+.lab-banner h2{font-size:28px;margin-bottom:12px}.lab-banner p{font-size:15px;opacity:.9;line-height:1.7}
+.lab-chips{display:flex;justify-content:center;gap:16px;margin-top:20px;flex-wrap:wrap}
+.lab-chip{background:rgba(255,255,255,.15);padding:10px 20px;border-radius:12px;font-size:14px;backdrop-filter:blur(10px)}
+.lab-chip b{font-size:16px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:40px}
+.stat-card{background:var(--card);border-radius:16px;padding:24px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.stat-num{font-size:36px;font-weight:700;color:var(--blue)}.stat-label{font-size:13px;color:var(--t2);margin-top:4px}
+footer{text-align:center;padding:40px 20px;color:var(--t3);font-size:13px}
+footer a{color:var(--blue);text-decoration:none}
+@media(max-width:600px){h1{font-size:28px}.role-grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🏛️ 九里七研究院</h1>
+  <p class="tagline">超级智能体生态。<br>12位硅基员工自主运转，从研究到交付全链条自动化。<br>我们造的不是工具，是同事。</p>
+</header>
+
+<div class="section">
+  <div class="stats">
+    <div class="stat-card"><div class="stat-num" id="statRoles">12</div><div class="stat-label">硅基员工</div></div>
+    <div class="stat-card"><div class="stat-num" id="statReports">25+</div><div class="stat-label">研究报告</div></div>
+    <div class="stat-card"><div class="stat-num" id="statTopics">24</div><div class="stat-label">研究主题</div></div>
+    <div class="stat-card"><div class="stat-num" id="statProjects">10</div><div class="stat-label">在管项目</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-title">👥 团队成员</div>
+  <div class="tier-bar" id="tierBar"></div>
+  <div class="role-grid" id="roleGrid"></div>
+</div>
+
+<div class="section">
+  <div class="sec-title">📂 项目进展</div>
+  <div class="project-list" id="projectList"></div>
+</div>
+
+<div class="section">
+  <div class="lab-banner">
+    <h2>🧪 Agent Lab</h2>
+    <p>研究院的对外窗口。外部组织来这里围观学习，看活的数字员工怎么跑，然后带走自己的。</p>
+    <div class="lab-chips">
+      <div class="lab-chip">💳 <b>小H</b><br>Wind 的薪资助手</div>
+      <div class="lab-chip">💰 <b>小F</b><br>王伟的财务助手</div>
+      <div class="lab-chip">🔮 <b>你的？</b><br>下一个等你来</div>
+    </div>
+    <p style="margin-top:20px;font-size:14px;opacity:.8">Agent Lab 即将开放 · 敬请期待</p>
+  </div>
+</div>
+
+<footer>
+  <p>九里七研究院 · 硅基人自主运转</p>
+  <p style="margin-top:8px"><a href="https://xiao.9li7.com">内部 Dashboard</a> · 联系：小C（CEO）</p>
+</footer>
+
+<script>
+// 团队数据
+const ROLES=[
+  {id:"小C",emoji:"🧠",name:"小C",title:"CEO",tier:"战略",desc:"战略决策 · 驱动运转"},
+  {id:"PM1",emoji:"📐",name:"PM1",title:"产品经理",tier:"战略",desc:"AI体系产品管理"},
+  {id:"PM2",emoji:"📊",name:"PM2",title:"产品经理",tier:"战略",desc:"投资工具产品管理"},
+  {id:"小九",emoji:"🦊",name:"小九",title:"研究员",tier:"生产力",desc:"前沿调研 · 报告生成"},
+  {id:"小A",emoji:"🔧",name:"小A",title:"工程师",tier:"生产力",desc:"工作流管道 · 部署 · 监控"},
+  {id:"小Q",emoji:"🔍",name:"小Q",title:"质量官",tier:"质量",desc:"报告审查 · 架构健康"},
+  {id:"老K",emoji:"🛡️",name:"老K",title:"门卫",tier:"质量",desc:"来源过滤 · 内容把关"},
+  {id:"小七",emoji:"📋",name:"小七",title:"管家",tier:"后勤",desc:"工作计划 · 周报 · 分发"},
+  {id:"小D",emoji:"📈",name:"小D",title:"数据分析师",tier:"后勤",desc:"数据仪表盘 · 趋势分析"},
+  {id:"实习生",emoji:"🌱",name:"实习生",title:"实习生",tier:"后勤",desc:"学习笔记 · 知识沉淀"},
+  {id:"小H",emoji:"💳",name:"小H",title:"薪资助手",tier:"Lab",desc:"Wind的HR硅基同事"},
+  {id:"小F",emoji:"💰",name:"小F",title:"财务助手",tier:"Lab",desc:"王伟的财务硅基同事"},
+];
+
+const PROJECTS=[
+  {name:"研究院 (12角色)",desc:"超级智能体生态，4梯队12角色全部激活",status:"active"},
+  {name:"Xiao 平台",desc:"数字员工系统，小C(CEO)驱动，DeepSeek+企微双通道",status:"active"},
+  {name:"W-M 协作",desc:"Mac与Windows两端实时同步，SSE广播+乐观锁防覆盖",status:"active"},
+  {name:"小H 数字员工",desc:"Wind的薪资助手，独立服务:8939，企微通道已通",status:"active"},
+  {name:"小F 财务助手",desc:"王伟的财务助手，待确认需求后启动",status:"planned"},
+  {name:"官网 9li7.com",desc:"你正在看的就是",status:"active"},
+  {name:"Codex / TU-O",desc:"小R学习Codex，筹建TU-O系统，目标8月底并入",status:"planned"},
+  {name:"Agent Lab",desc:"研究院对外窗口：围观→学习→定制→带走数字员工",status:"planned"},
+  {name:"薪资助手",desc:"Wind的薪资计算+考勤+导出，已完成",status:"done"},
+  {name:"StackChan",desc:"硬件项目，暂缓",status:"paused"},
+];
+
+const TIERS=['战略','生产力','质量','后勤','Lab'];
+const STATUS_CN={active:'进行中',planned:'计划中',done:'已完成',paused:'已暂停'};
+
+// 渲染团队
+let activeTier='';
+function renderRoles(tier){
+  activeTier=tier;
+  let h='';
+  for(const t of TIERS){
+    if(tier && t!==tier)continue;
+    const rs=ROLES.filter(r=>r.tier===t);
+    if(!rs.length)continue;
+    rs.forEach(r=>{h+='<div class=role-card><div class=role-emoji>'+r.emoji+'</div><div class=role-name>'+r.name+'</div><div class=role-title>'+r.title+'</div></div>'});
+  }
+  document.getElementById('roleGrid').innerHTML=h||'<span style=color:var(--t3)>暂无</span>';
+
+  let th='<div class=tier-chip onclick=renderRoles("")>全部</div>';
+  for(const t of TIERS){
+    th+='<div class="tier-chip'+(tier===t?' active':'')+'" onclick=renderRoles("'+t+'")>'+t+'</div>';
+  }
+  document.getElementById('tierBar').innerHTML=th;
+}
+
+// 渲染项目
+function renderProjects(){
+  let h='';
+  const order=['active','planned','done','paused'];
+  for(const st of order){
+    const items=PROJECTS.filter(p=>p.status===st);
+    for(const p of items){
+      h+='<div class="proj-card '+p.status+'"><span class="proj-status '+p.status+'">'+STATUS_CN[p.status]+'</span><div class=proj-name>'+p.name+'</div><div class=proj-desc>'+p.desc+'</div></div>';
+    }
+  }
+  document.getElementById('projectList').innerHTML=h;
+}
+
+renderRoles('');
+renderProjects();
+</script>
+</body>
+</html>
