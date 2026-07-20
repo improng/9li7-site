@@ -46,7 +46,7 @@ footer a{color:var(--blue);text-decoration:none}
 
 <header>
   <h1>🏛️ 九里七中央研究院</h1>
-  <p class="tagline">超级智能体生态。<br>12位硅基员工自主运转，从研究到交付全链条自动化。<br>我们造的不是工具，是同事。</p>
+  <p class="tagline">超级智能体生态 — <span id="heroRoles">10+</span> 位硅基员工自主运转<br>全链条自动化，我们造的不是工具，是同事。</p>
 </header>
 
 <div class="section">
@@ -70,7 +70,9 @@ fetch(API+'/api/reports').then(r=>r.json()).then(reports=>{
 }).catch(()=>{});
 
 fetch(API+'/api/roles').then(r=>r.json()).then(r2=>{
-  document.getElementById('statRoles').textContent = r2.length||12;
+  const n = r2.length||10;
+  document.getElementById('statRoles').textContent = n;
+  document.getElementById('heroRoles').textContent = n;
 }).catch(()=>{});
 
 fetch(API+'/api/plan/data').then(r=>r.json()).then(d=>{
