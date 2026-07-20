@@ -132,20 +132,27 @@ const ROLES=[
 ];
 
 const PROJECTS=[
-  {name:"研究院 (12角色)",desc:"超级智能体生态，4梯队12角色全部激活",status:"active"},
-  {name:"Xiao 平台",desc:"数字员工系统，小C(CEO)驱动，DeepSeek+企微双通道",status:"active"},
-  {name:"W-M 协作",desc:"Mac与Windows两端实时同步，SSE广播+乐观锁防覆盖",status:"active"},
-  {name:"小H 数字员工",desc:"Wind的薪资助手，独立服务:8939，企微通道已通",status:"active"},
-  {name:"小F 财务助手",desc:"王伟的财务助手，待确认需求后启动",status:"planned"},
-  {name:"官网 9li7.com",desc:"你正在看的就是",status:"active"},
-  {name:"Codex / TU-O",desc:"小R学习Codex，筹建TU-O系统，目标8月底并入",status:"planned"},
-  {name:"Agent Lab",desc:"研究院对外窗口：围观→学习→定制→带走数字员工",status:"planned"},
-  {name:"薪资助手",desc:"Wind的薪资计算+考勤+导出，已完成",status:"done"},
+  {name:"研究院 (12角色)",desc:"超级智能体生态，4梯队12角色全部激活，第30周主攻协作密度",status:"active"},
+  {name:"小H 数字员工",desc:"Wind的薪资助手，独立服务:8939，企微通道已通",status:"running"},
+  {name:"Xiao 平台",desc:"数字员工系统，小C(CEO)驱动，DeepSeek+企微双通道",status:"running"},
+  {name:"官网 9li7.com",desc:"你正在看的就是",status:"running"},
+  {name:"W-M 协作",desc:"SSE广播+乐观锁已上线，等Windows端base_commit联测",status:"waiting"},
+  {name:"小F 财务助手",desc:"王伟的财务助手，待确认需求后启动",status:"waiting"},
+  {name:"Codex / TU-O",desc:"小R学习Codex，筹建TU-O系统，目标8月底并入",status:"waiting"},
+  {name:"Agent Lab",desc:"中研院对外窗口：围观→学习→定制→带走数字员工",status:"queued"},
+  {name:"薪资助手",desc:"Wind的薪资计算+考勤+导出",status:"done"},
   {name:"StackChan",desc:"硬件项目，暂缓",status:"paused"},
 ];
 
 const TIERS=['战略','生产力','质量','后勤','Lab'];
-const STATUS_CN={active:'进行中',planned:'计划中',done:'已完成',paused:'已暂停'};
+const PHASES=[
+  {id:"active",label:"Active",color:"#0071e3"},
+  {id:"running",label:"Running",color:"#34c759"},
+  {id:"waiting",label:"Waiting",color:"#ff9500"},
+  {id:"queued",label:"Queued",color:"#86868b"},
+  {id:"done",label:"Done",color:"#0071e3"},
+  {id:"paused",label:"Paused",color:"#aeaeb2"},
+];
 
 // 渲染团队
 let activeTier='';
@@ -170,11 +177,11 @@ function renderRoles(tier){
 // 渲染项目
 function renderProjects(){
   let h='';
-  const order=['active','planned','done','paused'];
-  for(const st of order){
-    const items=PROJECTS.filter(p=>p.status===st);
+  for(const phase of PHASES){
+    const items=PROJECTS.filter(p=>p.status===phase.id);
+    if(!items.length)continue;
     for(const p of items){
-      h+='<div class="proj-card '+p.status+'"><span class="proj-status '+p.status+'">'+STATUS_CN[p.status]+'</span><div class=proj-name>'+p.name+'</div><div class=proj-desc>'+p.desc+'</div></div>';
+      h+='<div class="proj-card '+phase.id+'" style="border-left-color:'+phase.color+'"><span class="proj-status" style="background:'+phase.color+'15;color:'+phase.color+'">'+phase.label+'</span><div class=proj-name>'+p.name+'</div><div class=proj-desc>'+p.desc+'</div></div>';
     }
   }
   document.getElementById('projectList').innerHTML=h;
