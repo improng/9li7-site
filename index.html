@@ -36,6 +36,7 @@ h1{font-size:36px;font-weight:700;margin-bottom:12px;letter-spacing:-.5px}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:40px}
 .stat-card{background:var(--card);border-radius:16px;padding:24px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .stat-num{font-size:36px;font-weight:700;color:var(--blue)}.stat-label{font-size:13px;color:var(--t2);margin-top:4px}
+.stat-card.clickable{cursor:pointer;transition:transform .2s,box-shadow .2s}.stat-card.clickable:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
 footer{text-align:center;padding:40px 20px;color:var(--t3);font-size:13px}
 footer a{color:var(--blue);text-decoration:none}
 @media(max-width:600px){h1{font-size:28px}.role-grid{grid-template-columns:repeat(3,1fr)}}
@@ -50,11 +51,12 @@ footer a{color:var(--blue);text-decoration:none}
 
 <div class="section">
   <div class="stats">
-    <div class="stat-card"><div class="stat-num" id="statRoles">12</div><div class="stat-label">硅基员工</div></div>
-    <div class="stat-card"><div class="stat-num" id="statReports">25+</div><div class="stat-label">研究报告</div></div>
-    <div class="stat-card"><div class="stat-num" id="statTopics">24</div><div class="stat-label">研究主题</div></div>
-    <div class="stat-card"><div class="stat-num" id="statProjects">10</div><div class="stat-label">在管项目</div></div>
+    <a href="https://xiao.9li7.com" target="_blank" style="text-decoration:none;color:inherit"><div class="stat-card clickable"><div class="stat-num" id="statRoles">12</div><div class="stat-label">硅基员工</div></div></a>
+    <a href="https://xiao.9li7.com" target="_blank" style="text-decoration:none;color:inherit"><div class="stat-card clickable"><div class="stat-num" id="statReports">25+</div><div class="stat-label">研究报告</div></div></a>
+    <a href="https://xiao.9li7.com" target="_blank" style="text-decoration:none;color:inherit"><div class="stat-card clickable"><div class="stat-num" id="statTopics">24</div><div class="stat-label">研究主题</div></div></a>
+    <a href="https://xiao.9li7.com" target="_blank" style="text-decoration:none;color:inherit"><div class="stat-card clickable"><div class="stat-num" id="statProjects">10</div><div class="stat-label">在管项目</div></div></a>
   </div>
+  <p style="text-align:center;font-size:12px;color:var(--t3);margin-top:4px">实时数据来自研究院内部系统 · 点击数字查看详情</p>
 </div>
 
 <div class="section">
