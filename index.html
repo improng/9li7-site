@@ -75,9 +75,18 @@ fetch(API+'/api/roles').then(r=>r.json()).then(r2=>{
   document.getElementById('statRoles').textContent = r2.length||10;
 }).catch(()=>{});
 
+// 项目数据与 Dashboard 共享 PHASE_MAP，保持同步
+const PROJ_PHASE = {
+  '研究院 (12角色)':'active','小H 数字员工':'running','Xiao 平台':'running',
+  '官网 9li7.com':'running','W-M 协作':'waiting','小F 财务助手':'waiting',
+  'Codex 研究 (W2)':'active','Agent Lab':'running','薪资助手':'done','StackChan':'paused'
+};
+let PROJECTS=[];
 fetch(API+'/api/plan/data').then(r=>r.json()).then(d=>{
-  const total = (d.active||[]).length + (d.planned||[]).length + (d.done||[]).length + (d.paused||[]).length;
-  document.getElementById('statProjects').textContent = total||10;
+  const all=[...(d.active||[]),...(d.planned||[]),...(d.done||[]),...(d.paused||[])];
+  PROJECTS=all.map(p=>({name:p.name,desc:p.desc,status:PROJ_PHASE[p.name]||'active'}));
+  document.getElementById('statProjects').textContent = PROJECTS.length||10;
+  renderProjects();
 }).catch(()=>{});
 </script>
 
@@ -128,19 +137,6 @@ const ROLES=[
   {id:"小F",emoji:"💰",name:"小F",title:"财务助手",tier:"Lab",desc:"王伟的财务硅基同事"},
 ];
 
-const PROJECTS=[
-  {name:"研究院 (12角色)",desc:"超级智能体生态，4梯队12角色全部激活，第30周主攻协作密度",status:"active"},
-  {name:"小H 数字员工",desc:"Wind的薪资助手，独立服务:8939，企微通道已通",status:"running"},
-  {name:"Xiao 平台",desc:"数字员工系统，小C(CEO)驱动，DeepSeek+企微双通道",status:"running"},
-  {name:"官网 9li7.com",desc:"你正在看的就是",status:"running"},
-  {name:"W-M 协作",desc:"SSE广播+乐观锁已上线，等Windows端base_commit联测",status:"waiting"},
-  {name:"小F 财务助手",desc:"王伟的财务助手，待确认需求后启动",status:"waiting"},
-  {name:"Codex / TU-O",desc:"小R学习Codex，筹建TU-O系统，目标8月底并入",status:"waiting"},
-  {name:"Agent Lab",desc:"中研院对外窗口：围观→学习→定制→带走数字员工",status:"queued"},
-  {name:"薪资助手",desc:"Wind的薪资计算+考勤+导出",status:"done"},
-  {name:"StackChan",desc:"硬件项目，暂缓",status:"paused"},
-];
-
 const TIERS=['战略','生产力','质量','后勤','Lab'];
 const PHASES=[
   {id:"active",label:"Active",color:"#0071e3"},
@@ -185,7 +181,6 @@ function renderProjects(){
 }
 
 renderRoles('');
-renderProjects();
 </script>
 </body>
 </html>
