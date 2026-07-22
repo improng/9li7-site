@@ -1,0 +1,13 @@
+#!/bin/bash
+# 官网版本快照 — 每次确认修改后执行
+cd "$(dirname "$0")"
+LAST=$(git tag -l 'v*' | sort -V | tail -1)
+if [ -z "$LAST" ]; then NEW="v1.0"
+else
+  MAJOR=${LAST#v}; MAJOR=${MAJOR%.*}; MINOR=${LAST##*.}
+  NEW="v${MAJOR}.$((MINOR + 1))"
+fi
+MSG="${1:-版本快照}"
+git add index.html
+git commit -m "$NEW: $MSG" && git tag -a "$NEW" -m "$MSG" && git push && git push origin "$NEW"
+echo "✅ $NEW 已保存"
