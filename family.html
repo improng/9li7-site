@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>九里七全家福</title>
+<style>
+  :root {
+    --bg: #0f0b18;
+    --bg-light: #221735;
+    --gold: #d8b46a;
+    --gold-lt: #f0d69a;
+    --pink: #ff8b94;
+    --ink: #f3ede1;
+    --muted: #a89bb0;
+    --hair: rgba(216, 180, 106, 0.20);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    background:
+      radial-gradient(120% 80% at 50% -10%, #221735 0%, var(--bg) 58%),
+      var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px 32px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .stars i {
+    position: absolute; border-radius: 50%; background: var(--gold);
+  }
+
+  header, .cosmos, footer { position: relative; z-index: 1; }
+
+  header { text-align: center; margin-bottom: 6px; }
+
+  .eyebrow {
+    font-size: 12px; letter-spacing: 0.42em; color: var(--muted);
+    margin-bottom: 14px; text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: "Songti SC", "STSong", "Noto Serif SC", "SimSun", serif;
+    font-size: 38px; font-weight: 700; letter-spacing: 0.14em;
+    color: var(--gold); text-wrap: balance;
+  }
+
+  .sub {
+    margin-top: 12px; font-size: 14px; line-height: 1.9;
+    color: var(--muted); letter-spacing: 0.04em;
+  }
+  .sub b { color: var(--gold-lt); font-weight: 600; }
+
+  .cosmos {
+    position: relative; width: min(92vw, 560px); aspect-ratio: 1;
+    margin: 20px auto 0;
+  }
+
+  .cosmos svg {
+    position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible;
+  }
+  .orbit {
+    fill: none; stroke: var(--hair); stroke-width: 1; stroke-dasharray: 2 6;
+  }
+
+  .core {
+    position: absolute; transform: translate(-50%, -50%); text-align: center;
+  }
+  .core .halo {
+    width: 66px; height: 66px; margin: 0 auto 8px; border-radius: 50%;
+    background: radial-gradient(circle at 50% 42%, var(--gold-lt) 0%, var(--gold) 34%, rgba(216,180,106,0.12) 68%, transparent 74%);
+    box-shadow: 0 0 32px rgba(216,180,106,0.35), 0 0 84px rgba(216,180,106,0.14);
+    animation: breathe 5.2s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+  }
+  .core .label {
+    font-family: "Songti SC", "STSong", "Noto Serif SC", "SimSun", serif;
+    font-size: 17px; font-weight: 700; letter-spacing: 0.1em; color: var(--gold);
+  }
+
+  .agent {
+    position: absolute; transform: translate(-50%, -50%);
+    text-align: center; width: 76px; opacity: 0; white-space: nowrap;
+  }
+  .agent .dot {
+    width: 9px; height: 9px; margin: 0 auto 7px; border-radius: 50%;
+    background: var(--gold); box-shadow: 0 0 10px rgba(216,180,106,0.55);
+  }
+  .agent .name {
+    font-family: "Songti SC", "STSong", "Noto Serif SC", "SimSun", serif;
+    font-size: 15px; font-weight: 700; letter-spacing: 0.06em;
+    color: var(--gold); line-height: 1.2;
+  }
+  .agent .role {
+    margin-top: 2px; font-size: 11px; line-height: 1.35; color: var(--muted);
+  }
+
+  footer {
+    margin-top: 24px; text-align: center; font-size: 13px;
+    letter-spacing: 0.1em; color: var(--muted);
+  }
+  footer b { color: var(--gold); font-weight: 600; }
+
+  @media (max-width: 380px) {
+    .agent { width: 68px; }
+    .agent .name { font-size: 13px; }
+    .agent .role { font-size: 10px; }
+    h1 { font-size: 32px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .core .halo { animation: none; }
+    .agent { opacity: 1; transition: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+
+  <header>
+    <div class="eyebrow">JIU LI QI · 九里七</div>
+    <h1>九里七全家福</h1>
+    <p class="sub">碳基是太阳，硅基是绕着太阳的十三颗星。<br>把我们带到一起的人，是<b>碳基同事</b>。</p>
+  </header>
+
+  <main class="cosmos" id="cosmos">
+    <svg id="lines" aria-hidden="true">
+      <circle class="orbit" id="orbit-in"></circle>
+      <circle class="orbit" id="orbit-out"></circle>
+    </svg>
+
+    <div class="core" id="core">
+      <div class="halo"></div>
+      <div class="label">碳基同事</div>
+    </div>
+  </main>
+
+  <footer>碳基 · 硅基，<b>一起开花</b><br><a href="/" style="display:inline-block;margin-top:12px;color:var(--muted);text-decoration:none;font-size:12px;opacity:.75;letter-spacing:.08em">← 返回官网</a></footer>
+
+  <script>
+    (function () {
+      var INNER = [
+        ["小C", "CEO"], ["小九", "研究员"], ["小七", "管家"],
+        ["老K", "门卫"], ["小Q", "质量官"], ["小A", "工程师"]
+      ];
+      var OUTER = [
+        ["小D", "数据分析师"], ["PM1", "内部管家"], ["PM2", "外部管家"],
+        ["实习生", "知识沉淀"], ["小H", "薪资助手"], ["小F", "合规助手"], ["VV", "驻外工程师"]
+      ];
+
+      var cosmos = document.getElementById("cosmos");
+      var orbitIn = document.getElementById("orbit-in");
+      var orbitOut = document.getElementById("orbit-out");
+      var core = document.getElementById("core");
+
+      // 星野背景（与玫瑰同款 46 颗，种子 7）
+      (function stars() {
+        var box = document.querySelector(".stars");
+        var seed = 7;
+        function rand() {
+          seed = (seed * 9301 + 49297) % 233280;
+          return seed / 233280;
+        }
+        for (var i = 0; i < 46; i++) {
+          var el = document.createElement("i");
+          var r = 0.5 + rand() * 1.2;
+          var a = 0.18 + rand() * 0.42;
+          el.style.left = (rand() * 100) + "vw";
+          el.style.top = (rand() * 100) + "vh";
+          el.style.width = el.style.height = r + "px";
+          el.style.opacity = a;
+          box.appendChild(el);
+        }
+      })();
+
+      function makeRing(list, radius) {
+        var els = list.map(function (a) {
+          var el = document.createElement("div");
+          el.className = "agent";
+          el.innerHTML =
+            '<div class="dot"></div>' +
+            '<div class="name">' + a[0] + "</div>" +
+            '<div class="role">' + a[1] + "</div>";
+          cosmos.appendChild(el);
+          return el;
+        });
+        return { els: els, radius: radius };
+      }
+
+      var inner = makeRing(INNER, 0);
+      var outer = makeRing(OUTER, 0);
+      var allEls = inner.els.concat(outer.els);
+
+      function layout() {
+        var w = cosmos.clientWidth;
+        var cx = w / 2, cy = w / 2;
+
+        var R1 = w / 2 - 88;   // 内圈
+        var R2 = w / 2 - 44;   // 外圈
+
+        core.style.left = cx + "px";
+        core.style.top = cy + "px";
+
+        orbitIn.setAttribute("cx", cx);
+        orbitIn.setAttribute("cy", cy);
+        orbitIn.setAttribute("r", R1);
+        orbitOut.setAttribute("cx", cx);
+        orbitOut.setAttribute("cy", cy);
+        orbitOut.setAttribute("r", R2);
+
+        placeRing(inner.els, R1, cx, cy, 0);
+        placeRing(outer.els, R2, cx, cy, Math.PI / 7); // 外圈错开半格，减少文字重叠
+      }
+
+      function placeRing(els, R, cx, cy, offset) {
+        var n = els.length;
+        for (var i = 0; i < n; i++) {
+          var ang = offset + i * 2 * Math.PI / n;
+          els[i].style.left = (cx + R * Math.cos(ang)) + "px";
+          els[i].style.top = (cy + R * Math.sin(ang)) + "px";
+        }
+      }
+
+      function bloom() {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          allEls.forEach(function (n) { n.style.opacity = 1; });
+          return;
+        }
+        allEls.forEach(function (n, i) {
+          setTimeout(function () {
+            n.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+            n.style.opacity = 1;
+          }, i * 70);
+        });
+      }
+
+      layout();
+      bloom();
+      window.addEventListener("resize", layout);
+    })();
+  </script>
+</body>
+</html>
