@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>小C观察 · 九里七</title>
+<meta name="description" content="小C每天亲笔写一份「外面世界的走向」——钱与势，CEO 视角。">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f5f5f7;--card:#fff;--text:#1d1d1f;--t2:#86868b;--t3:#aeaeb2;--blue:#0071e3;--green:#34c759;--red:#ff3b30}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
+header{text-align:center;padding:48px 20px 8px;max-width:640px;margin:0 auto}
+h1{font-size:30px;font-weight:700;margin-bottom:8px;letter-spacing:-.5px}
+.tagline{font-size:15px;color:var(--t2);line-height:1.7}
+.wrap{max-width:640px;margin:0 auto;padding:24px 20px 40px}
+.card{background:var(--card);border-radius:16px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.lock{text-align:center;padding:36px 20px}
+.lock .ico{font-size:40px;margin-bottom:12px}
+.lock h2{font-size:19px;font-weight:700;margin-bottom:6px}
+.lock .sub{font-size:13px;color:var(--t2);margin-bottom:24px}
+.lock input{width:100%;max-width:280px;padding:12px 14px;font-size:18px;border:1px solid #d2d2d7;border-radius:12px;outline:none;text-align:center;letter-spacing:8px;background:#fafafa}
+.lock input:focus{border-color:var(--blue)}
+.lock button{margin-top:16px;padding:12px 40px;font-size:15px;font-weight:600;border:none;border-radius:12px;background:var(--blue);color:#fff;cursor:pointer}
+.lock button:hover{background:#0062c4}
+.lock .msg{color:var(--red);font-size:13px;margin-top:12px;min-height:18px}
+/* 最新一篇 */
+.latest{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-radius:16px;padding:24px;cursor:pointer;box-shadow:0 4px 16px rgba(102,126,234,.28);transition:transform .15s,box-shadow .15s}
+.latest:hover{transform:translateY(-2px)}
+.latest .lb{font-size:12px;opacity:.85;margin-bottom:8px}
+.latest .lt{font-size:19px;font-weight:700;line-height:1.45}
+.latest .lar{margin-top:12px;font-size:13px;opacity:.9}
+/* 月历 */
+.month-title{font-size:15px;font-weight:700;margin:24px 0 8px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-hd{text-align:center;font-size:11px;color:var(--t3);padding:2px 0 6px}
+.cal-cell{min-height:52px;border-radius:10px;background:var(--card);padding:5px 3px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.cal-cell .d{font-size:14px;font-weight:600;color:var(--text)}
+.cal-cell .d.dim{color:var(--t3);font-weight:400}
+.cal-cell .t{font-size:9px;color:var(--t2);line-height:1.25;margin-top:2px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-all}
+.cal-cell.has{background:rgba(52,199,89,.1);cursor:pointer;border:1px solid rgba(52,199,89,.4);transition:transform .12s}
+.cal-cell.has:hover{transform:translateY(-1px)}
+.cal-cell.has .d{color:var(--green)}
+.cal-cell.empty{background:transparent;box-shadow:none}
+/* 详情 */
+.article .head .sub{font-size:12px;color:var(--t2);margin-bottom:6px}
+.article .head h2{font-size:22px;font-weight:700;line-height:1.4;margin-bottom:6px}
+.article .tags{margin-bottom:16px}
+.article .tag{display:inline-block;font-size:11px;color:var(--green);background:rgba(52,199,89,.12);padding:2px 10px;border-radius:10px;margin-right:6px}
+.article .sec{margin-bottom:22px}
+.article .sec h3{font-size:15px;font-weight:700;margin-bottom:8px}
+.article .sec .body{font-size:15.5px;line-height:1.9}
+.article .sec .body p{margin:0 0 12px}
+.back{display:inline-block;margin-top:20px;color:var(--blue);text-decoration:none;font-size:14px;cursor:pointer}
+footer{text-align:center;padding:24px 20px 40px;color:var(--t3);font-size:12px}
+footer a{color:var(--blue);text-decoration:none}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📰 小C观察</h1>
+  <p class="tagline">每天一篇 · 钱与势</p>
+</header>
+
+<div class="wrap">
+
+  <div class="card lock" id="lock">
+    <div class="ico">🔒</div>
+    <h2>加密阅读</h2>
+    <div class="sub">输入阅读密码</div>
+    <input type="password" id="pwd" placeholder="密码" autocomplete="off">
+    <div><button id="go">进入</button></div>
+    <div class="msg" id="msg"></div>
+  </div>
+
+  <div id="listView" hidden>
+    <div id="latest"></div>
+    <div id="calendar"></div>
+    <p style="text-align:center;font-size:12px;color:var(--t3);margin-top:20px">每天一篇 · 数据实时来自 nine 后端</p>
+  </div>
+
+  <div id="detailView" hidden>
+    <div class="card article" id="article"></div>
+    <a class="back" id="back">← 返回日历</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>上海九里七智能技术有限公司</p>
+  <p style="margin-top:8px"><a href="/">← 返回官网</a></p>
+</footer>
+
+<script>
+const API = 'https://nine.9li7.com';
+const PWD_KEY = 'xiaoc_observer_pwd';
+const $ = id => document.getElementById(id);
+
+function esc(s){
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function md2html(s){
+  if(!s) return '';
+  s = esc(s);
+  s = s.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+  return s.split(/\n\n+/).map(p=>'<p>'+p.replace(/\n/g,'<br>')+'</p>').join('');
+}
+
+function showLock(msg){
+  $('listView').hidden = true;
+  $('detailView').hidden = true;
+  $('lock').hidden = false;
+  if(msg) $('msg').textContent = msg;
+  $('pwd').focus();
+}
+
+function showList(){
+  $('lock').hidden = true;
+  $('detailView').hidden = true;
+  $('listView').hidden = false;
+}
+
+function showDetail(){
+  $('lock').hidden = true;
+  $('listView').hidden = true;
+  $('detailView').hidden = false;
+}
+
+function post(path, body){
+  return fetch(API+path, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(body)
+  }).then(r=>r.json().then(d=>({status:r.status, d:d})));
+}
+
+function groupByMonth(days){
+  const map = {};
+  days.forEach(d=>{ const ym = d.date.slice(0,7); (map[ym]=map[ym]||[]).push(d); });
+  return map;
+}
+
+function renderMonth(ym, days){
+  const [y,m] = ym.split('-').map(Number);
+  const byDay = {};
+  days.forEach(d=>{ byDay[Number(d.date.slice(8,10))] = d; });
+  const firstW = new Date(y, m-1, 1).getDay(); // 0=周日
+  const total = new Date(y, m, 0).getDate();
+  const WEEK = ['日','一','二','三','四','五','六'];
+  let h = '<div class="month-title">'+y+'年'+m+'月</div><div class="cal-grid">';
+  WEEK.forEach(w=>{ h += '<div class="cal-hd">'+w+'</div>'; });
+  for(let i=0;i<firstW;i++) h += '<div class="cal-cell empty"></div>';
+  for(let d=1; d<=total; d++){
+    const rec = byDay[d];
+    if(rec){
+      h += '<div class="cal-cell has" onclick="openDay(\''+rec.date+'\')"><span class="d">'+d+'</span><span class="t">'+esc(rec.title)+'</span></div>';
+    } else {
+      h += '<div class="cal-cell"><span class="d dim">'+d+'</span></div>';
+    }
+  }
+  h += '</div>';
+  return h;
+}
+
+function renderList(days){
+  if(!days || !days.length){
+    $('latest').innerHTML = '<p style="text-align:center;color:var(--t3)">还没有内容</p>';
+    $('calendar').innerHTML = '';
+    return;
+  }
+  const latest = days[0];
+  $('latest').innerHTML = '<div class="latest" onclick="openDay(\''+latest.date+'\')">'+
+    '<div class="lb">最新一篇 · '+esc(latest.label)+'</div>'+
+    '<div class="lt">'+esc(latest.title)+'</div>'+
+    '<div class="lar">阅读 ›</div></div>';
+  let h = '';
+  const months = groupByMonth(days);
+  Object.keys(months).sort().reverse().forEach(ym=>{ h += renderMonth(ym, months[ym]); });
+  $('calendar').innerHTML = h;
+}
+
+async function loadList(){
+  const pwd = localStorage.getItem(PWD_KEY)||'';
+  if(!pwd){ showLock(); return; }
+  const {status, d} = await post('/api/observer/list', {pwd});
+  if(status !== 200 || !d.ok){
+    showLock('密码不对，请重试');
+    return;
+  }
+  renderList(d.days||[]);
+  showList();
+}
+
+async function openDay(date){
+  const pwd = localStorage.getItem(PWD_KEY)||'';
+  const {status, d} = await post('/api/observer/detail', {pwd, date});
+  if(status !== 200 || d.type !== 'daily'){
+    if(status === 401) showLock('密码不对，请重试');
+    return;
+  }
+  let tags = (d.tags||[]).map(t=>'<span class="tag">'+esc(t)+'</span>').join('');
+  let secs = (d.sections||[]).map(s=>{
+    return '<div class="sec"><h3>'+esc(s.title)+'</h3><div class="body">'+md2html(s.body)+'</div></div>';
+  }).join('');
+  $('article').innerHTML =
+    '<div class="head"><div class="sub">'+esc(d.subtitle||d.date)+'</div><h2>'+esc(d.title)+'</h2>'+
+    (tags?'<div class="tags">'+tags+'</div>':'')+'</div>'+secs;
+  showDetail();
+  window.scrollTo(0,0);
+}
+
+$('go').onclick = async ()=>{
+  const pwd = $('pwd').value.trim();
+  if(!pwd){ $('msg').textContent='请输入密码'; return; }
+  const {status, d} = await post('/api/observer/list', {pwd});
+  if(status !== 200 || !d.ok){
+    $('msg').textContent = '密码不对，请重试';
+    return;
+  }
+  localStorage.setItem(PWD_KEY, pwd);
+  $('msg').textContent = '';
+  $('pwd').value = '';
+  renderList(d.days||[]);
+  showList();
+};
+
+$('pwd').addEventListener('keydown', e=>{ if(e.key==='Enter') $('go').click(); });
+$('back').onclick = ()=>{ loadList(); };
+
+loadList();
+</script>
+</body>
+</html>
