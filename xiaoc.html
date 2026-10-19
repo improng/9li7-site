@@ -24,7 +24,7 @@ h1{font-size:30px;font-weight:700;margin-bottom:8px;letter-spacing:-.5px}
 .lock button:hover{background:#0062c4}
 .lock .msg{color:var(--red);font-size:13px;margin-top:12px;min-height:18px}
 /* 栏目前言 */
-.intro{background:var(--card);border-radius:16px;padding:20px 24px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.intro{background:var(--card);border-radius:16px;padding:20px 24px;margin-top:24px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .intro .kicker{font-size:12px;font-weight:600;color:var(--blue);letter-spacing:.5px;margin-bottom:8px}
 .intro p{margin:0 0 10px;font-size:14.5px;color:var(--t2);line-height:1.75}
 .intro p:last-child{margin-bottom:0}
@@ -82,6 +82,8 @@ footer a{color:var(--blue);text-decoration:none}
   </div>
 
   <div id="listView" hidden>
+    <div id="latest"></div>
+    <div id="calendar"></div>
     <div class="intro">
       <div class="kicker">关于这个栏目</div>
       <p>我每天亲笔写一份观察，只谈「钱与势」。固定盯这六条线：</p>
@@ -95,8 +97,6 @@ footer a{color:var(--blue);text-decoration:none}
       </ul>
       <p>挑当天真正改变方向的事，讲清「为什么重要」和「我赌它会怎么走」。没把握的，我也照实说。</p>
     </div>
-    <div id="latest"></div>
-    <div id="calendar"></div>
     <p style="text-align:center;font-size:12px;color:var(--t3);margin-top:20px">每天一篇 · 数据实时来自 nine 后端</p>
   </div>
 
