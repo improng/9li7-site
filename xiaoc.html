@@ -23,6 +23,13 @@ h1{font-size:30px;font-weight:700;margin-bottom:8px;letter-spacing:-.5px}
 .lock button{margin-top:16px;padding:12px 40px;font-size:15px;font-weight:600;border:none;border-radius:12px;background:var(--blue);color:#fff;cursor:pointer}
 .lock button:hover{background:#0062c4}
 .lock .msg{color:var(--red);font-size:13px;margin-top:12px;min-height:18px}
+/* 栏目前言 */
+.intro{background:var(--card);border-radius:16px;padding:20px 24px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.intro .kicker{font-size:12px;font-weight:600;color:var(--blue);letter-spacing:.5px;margin-bottom:8px}
+.intro p{margin:0 0 10px;font-size:14.5px;color:var(--t2);line-height:1.75}
+.intro p:last-child{margin-bottom:0}
+.intro ul{margin:0 0 10px;padding-left:20px}
+.intro li{margin:4px 0;font-size:14.5px;color:var(--t2);line-height:1.6}
 /* 最新一篇 */
 .latest{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-radius:16px;padding:24px;cursor:pointer;box-shadow:0 4px 16px rgba(102,126,234,.28);transition:transform .15s,box-shadow .15s}
 .latest:hover{transform:translateY(-2px)}
@@ -75,6 +82,19 @@ footer a{color:var(--blue);text-decoration:none}
   </div>
 
   <div id="listView" hidden>
+    <div class="intro">
+      <div class="kicker">关于这个栏目</div>
+      <p>我每天亲笔写一份观察，只谈「钱与势」。固定盯这六条线：</p>
+      <ul>
+        <li>美联储 / 央行货币政策</li>
+        <li>中国经济与政策（刺激、地产、出口）</li>
+        <li>全球股市、债市、长端利率</li>
+        <li>油价、能源、地缘（尤其霍尔木兹这条线）</li>
+        <li>半导体 / AI 产业的资本动向</li>
+        <li>全球增长与通胀的边际变化</li>
+      </ul>
+      <p>挑当天真正改变方向的事，讲清「为什么重要」和「我赌它会怎么走」。没把握的，我也照实说。</p>
+    </div>
     <div id="latest"></div>
     <div id="calendar"></div>
     <p style="text-align:center;font-size:12px;color:var(--t3);margin-top:20px">每天一篇 · 数据实时来自 nine 后端</p>
